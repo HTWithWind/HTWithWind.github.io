@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"htwithwind.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="The system has four modules with an region overview functiona-lity, which conta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黄土高原生态系统承载力系统设计">
+<meta property="og:url" content="https://htwithwind.github.io/2021/01/21/lp-ccas/index.html">
+<meta property="og:site_name" content="心泪随风">
+<meta property="og:description" content="The system has four modules with an region overview functiona-lity, which conta">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://htwithwind.github.io/images/abstract/0001.png">
+<meta property="og:image" content="https://htwithwind.github.io/2021/01/21/lp-ccas/figure1.jpg">
+<meta property="og:image" content="https://htwithwind.github.io/2021/01/21/lp-ccas/figure2.jpg">
+<meta property="article:published_time" content="2021-01-21T07:20:23.000Z">
+<meta property="article:modified_time" content="2021-01-27T14:59:04.000Z">
+<meta property="article:author" content="FengSui">
+<meta property="article:tag" content="系统设计">
+<meta property="article:tag" content="黄土高原">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://htwithwind.github.io/images/abstract/0001.png">
+
+<link rel="canonical" href="https://htwithwind.github.io/2021/01/21/lp-ccas/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>黄土高原生态系统承载力系统设计 | 心泪随风</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="心泪随风" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">心泪随风</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">应无所住, 而生其心</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">3</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://htwithwind.github.io/2021/01/21/lp-ccas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="FengSui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心泪随风">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          黄土高原生态系统承载力系统设计
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-21 15:20:23" itemprop="dateCreated datePublished" datetime="2021-01-21T15:20:23+08:00">2021-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:59:04" itemprop="dateModified" datetime="2021-01-27T22:59:04+08:00">2021-01-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">软件开发</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div>
+    <table style="margin-left: auto; margin-right: auto;">
+        <tbody><tr>
+            <td style="">
+                <!--左侧内容-->
+                <img src="/images/abstract/0001.png" width="450px" height="150px">
+            </td>
+            <td>
+                <!--右侧内容-->
+                The system has four modules with an region overview functiona-lity, which contains base datasets selection, process parameter configuration, spatialtemp-oral analysis and scenario simulation.
+            </td>
+        </tr>
+    </tbody></table>
+</div>
+<a id="more"></a>
+
+<h1 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h1><h2 id="FRAMEWORK"><a href="#FRAMEWORK" class="headerlink" title="FRAMEWORK"></a>FRAMEWORK</h2><p>  <strong>ECCAS</strong>( <strong>E</strong>cosystem <strong>C</strong>arrying <strong>C</strong>apicity <strong>A</strong>ssessment <strong>S</strong>ystem) has a full graphical user interface (GUI) functionality and runs on Microsoft Windows operating systems. The system has four modules with an region overview functiona-lity, which contains base datasets selection, process parameter configuration, spatialtemp-oral analysis and scenario simulation. Precipitation and social-economic water are two vital factors that affect the ecosystem carrying capacity. Region overview shows us the ev-aluation results of history and future ecosystem carrying capacity directly, and according to different geomorphological types, we can find out whether different regions are overloa-ded or not.</p>
+<div align="center">
+    <img src="/2021/01/21/lp-ccas/figure1.jpg" width="600" alt="figure1">
+</div>
+
+<p>  ECCAS is coded in Python, Matlab, Scala and JavaScript based on the Linux operating system. All models and data are encapsulated in the bottom framework. For interacting with geospatial files, ECCAS uses the Geospatial Data Abstraction Library (GDAL, 2015) for raster and vector handling. The related models are accessed by ECCAS via the python API. Base data selection can be accessed from a series of drop down menus, from live ‘radio-buttons’, or from toolbars embedded in the user interface, which means that users can circumvent use of the drop down menu system. Selecting the suite of radio buttons and toolbars is performed by clicking the respective active area of the screen with the mouse. In summary, ECCAS is designed to achieve communication, persistence and accessibility merits in terms of platform independence, as well as model sharing, high performance computing and dynamic visualization capabilities.</p>
+<div align="center">
+    <img src="/2021/01/21/lp-ccas/figure2.jpg" width="600" alt="figure2">
+</div>
+
+<h2 id="FUNCTION"><a href="#FUNCTION" class="headerlink" title="FUNCTION"></a>FUNCTION</h2><h3 id="HOMEPAGE"><a href="#HOMEPAGE" class="headerlink" title="HOMEPAGE"></a>HOMEPAGE</h3><p><strong>  This module is the integration of social and economic water consumption, precipitation, NDVI, GPP, the carrying capacity of ecological system related information or preliminary results.</strong></p>
+<ul>
+<li><p><strong>Precipitation</strong></p>
+<ul>
+<li>Brief introduction of precipitation.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The precipitation spatial pattern of this period.</li>
+</ul>
+</li>
+<li><p><strong>SEWD</strong></p>
+<ul>
+<li>Brief introduction of Social Economic Water.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The spatial pattern of this period.</li>
+</ul>
+</li>
+<li><p><strong>NDVI</strong></p>
+<ul>
+<li>Brief introduction of NDVI.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The spatial pattern of this period.</li>
+</ul>
+</li>
+<li><p><strong>GPP</strong></p>
+<ul>
+<li>Brief introduction of GPP.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The spatial pattern of this period.</li>
+</ul>
+</li>
+<li><p><strong>ECC</strong></p>
+<ul>
+<li><strong>ECC</strong><ul>
+<li>Brief introduction of Ecosystem Carrying Capacity.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The spatial pattern of this period.</li>
+<li><code>Relationship</code> : The relationship between ECC and Precipitation.</li>
+</ul>
+</li>
+<li><strong>W (GPP/ECC)</strong><ul>
+<li>Brief introduction of W.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The spatial pattern of this period.</li>
+<li><code>Percentage</code> : The percentage of w for different in LP countys. </li>
+</ul>
+</li>
+<li><strong>GPP-ECC</strong><ul>
+<li>Brief introduction of GPP subtract ECC.</li>
+<li><code>Sequence</code> : Time sequence of rainfall between start year and end year, including six geomorphic regions of the Loess Plateau and LP.</li>
+<li><code>Pattern</code> : The spatial pattern of this period.</li>
+</ul>
+</li>
+<li><strong>Region Statistic</strong><ul>
+<li>Different region statistc results, include LP/County/Geomorphic Zone/Ecological Zone/Brain.</li>
+<li>The percentage of different status(overload w &gt; 1, not overload w &lt; 0.75, will overload 0.75 &lt; w &lt; 1).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="BASEDATA"><a href="#BASEDATA" class="headerlink" title="BASEDATA"></a>BASEDATA</h3><p><strong>  In addition to the assessment of ecosystem carrying capacity, ECCAS also integrates a large number of different types of basic data for users to query, statistics and analysis that felicitates the decision efficiency of stakeholders and decision makers at different levels.These base datasets comprise meteorological data, hydrological data, vegetation data, land use data and socio-economic water use data.</strong></p>
+<ul>
+<li><p><strong>Hydrology Site Data</strong></p>
+<ul>
+<li>Click on the site(red triangle), on the site of the runoff and sediment deep query data, time sequence (right 1).</li>
+<li>runoff and sediment data are entered into ECCAS perform <a target="_blank" rel="noopener" href="https://www.xlstat.com/en/solutions/features/mann-kendall-trend-tests">Mann-Kendall</a> test analysis(right 2).</li>
+<li>correlation analysis（right 3）. </li>
+</ul>
+</li>
+<li><p><strong>Meteorological Data</strong></p>
+<ul>
+<li>The daily meteorological data (1982-2012) of 79 stations located on and around the Loess Plateau, including precipitation, air temperature, relative humidity, wind speed , sunshine duration,etc., were analyzed by ECCAS. </li>
+<li>When the user clicks <code>More</code> button,  analysis results of all meteorological elements will show on a pops up window. </li>
+</ul>
+</li>
+<li><p><strong>Hydrology</strong></p>
+<ul>
+<li>Different products of evapotranspiration data carousel on the map, including the spatial pattern and slope products, the upper right corner of the show is: scene schema spatial pattern/slope.</li>
+<li>The top-down analysis of evapotranspiration data of different products of the time series, the Loess Plateau six physiognomy spatial pattern analysis, and NDVI/LAI/ precipitation (<code>Pre</code>) /average temperature(<code>Tem</code>) / relative humidity (<code>RH</code>) correlation.</li>
+</ul>
+</li>
+<li><p><strong>Vegetation Data</strong></p>
+<ul>
+<li>Different products of LAI data carousel on the map, including the spatial pattern and slope products, the upper right corner of the show is: scene schema spatial pattern/slope..</li>
+<li>The top-down analysis of LAI data of different products of the time series, the Loess Plateau six physiognomy spatial pattern analysis, and NDVI/evapotranspiration(<code>ET</code>)/ precipitation (<code>Pre</code>)/average temperature(<code>Tem</code>)/relative humidity(<code>RH</code>) correlation.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>Land Use</strong> </p>
+<ul>
+<li>the results of land use change in different regions of the Loess Plateau are shown on the map every five years. </li>
+</ul>
+</li>
+<li><p><strong>Social Data</strong></p>
+<ul>
+<li>When users want to understand the relationship between the number of all kinds of social phenomena and the development law of social-economic phenomena, they can complete the analysis of the relationship between population and Social in different regions by clicking <code>Social</code> option button.</li>
+</ul>
+</li>
+<li><p><strong>Carrying Capicity Data</strong></p>
+<ul>
+<li>The bearing capacity of data management, users and ordinary users are calculated based on the query.</li>
+<li>Select the calculation task, choose again analysis and display of data set, the user can see the data carousel on the map display, historical data interval is 5 years.</li>
+<li>The user can choose the right below the area of region query and statistical analysis, display, there are two ways of inquiry:<ul>
+<li>The mouse mobile query, including:<code>Scio-Eco water use</code>、<code>Precipitation</code>、<code>GPP</code>、<code>Carry Capicity</code>、<code>Carry Capicity (w)</code> and <code>Overload or not</code>.</li>
+<li>The mouse click query, the time sequence of the selected region of the data set under the above variables.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="PROCESS-PARAMETER"><a href="#PROCESS-PARAMETER" class="headerlink" title="PROCESS PARAMETER"></a>PROCESS PARAMETER</h3><ul>
+<li><p><strong>LP-VI Model</strong></p>
+<ul>
+<li><p>the ET and GPP are estimated by the LP-VI and TURC model, respectively, based on basic raster data, e.g. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Leaf_area_index">Leaf area index</a>, precipitation and temperature (<code>tab 1</code>).</p>
+</li>
+<li><p>and related empirical parameters, e.g. minimum stomatal resistance and maximum light use efficiency (<code>tab 2</code>). </p>
+</li>
+<li><p>The initial and final date of modeling are acquiescently set to the first and last days of measured LAI data. When the two models run are finished, two new function of Analysis and Save will be displayed. The former shows the magnitude and trend of ET and GPP in terms of their spatial patterns and different biomes. Users can download the produced figures by clicking the Save button. </p>
+</li>
+</ul>
+</li>
+<li><p><strong>LPCC Model</strong></p>
+<ul>
+<li><p>Then (<code>tabs 3 and 4</code>), the relationship between the above modeled ET and GPP are determined based on different periods, precipitation gradient, vegetation and geomorphologies types (regionalization selection can be single or multiple elections). </p>
+</li>
+<li><p>Users can check the fitness of regionalization through two important indicators of coefficient of determination (R<sup>2</sup>) and p-value. It should be noted that other ET and GPP products (e.g., MODIS and MTE products) are alternative if users are not willing to run the above two models with the local driving datasets. </p>
+</li>
+<li><p>Finally (<code>tab 5</code>), the water demand for socio-economic development is calculated. Based on precipitation and the water demand of human society, the ECC assessment during corresponding period has been achieved.</p>
+</li>
+<li><p>Users can view the configuration of social and economic water consumption，click <code>Ratio of socio-eco water</code>,the future configuration changes include the provinces, and contrast between them.</p>
+</li>
+<li><p>Users can click the <code>Region Statistic</code> button to display the regional statistical of results, and move the mouse directly query and map interaction. And users also can click the resion name in form to check the details in this region about precipitation/SEWD/GPP/W/ECC and so on.  </p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="SCENE-SIMULATION"><a href="#SCENE-SIMULATION" class="headerlink" title="SCENE SIMULATION"></a>SCENE SIMULATION</h3><p><strong>  One of methods for reducing these uncertainties and better aiding decision-making is to use results from multiple assessment under different possible scenarios.Based on the current socio-economic conditions in 2010, the water demands of seven provinces within the Loess Plateau during 2030s (i.e., 2030-2039) ~ 2090s are estimated.</strong></p>
+<ul>
+<li><p><strong>Function</strong></p>
+<ul>
+<li><p>The IPSL-CM5A-LR (IPSL) and HadGEM2-ES (HadGEM2) models are projected to decrease, which are primarily driven by that in northwestern and southeastern parts, respectively. By contrast, all GCMs project an increase in ecosystem use efficiency (WUE), with an average value of 14%. </p>
+</li>
+<li><p>With the climate change under RCP scenario during future periods and the growing water demand of socio-economic development, future potential ECC is further explored. </p>
+</li>
+<li><p>Although two models project a decreased precipitation, the increased carbon uptake per unit of water use, i.e. WUE, compensate this effect, and thus all GCMs produce an increased ECC compared with that over 1982-2012.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Operation Steps</strong></p>
+<ul>
+<li>Selection <code>Mession</code>, the results of each task are different, this function is to evaluate and analyze future capacity of the selected task.</li>
+<li>Not open to the social economy water parameter adjustment .</li>
+<li>There are four schema and five scenerio, some scenarios not.</li>
+<li>There are there statistics: spatial analysis, statistical analysis, assessment</li>
+<li><code>spatial analysis</code> : Include ECC/WUE relative change rate/Precipitation relative change rate spatial pattern in different scenerio or schema and periods.</li>
+<li><code>statistical analysis</code> : Include ECC/WUE relative change rate/Precipitation relative change rate statistic in different scenerio or schema and periods.</li>
+<li><code>assessment</code> : Main W spatial pattern in different scenerio or schema and periods.</li>
+</ul>
+</li>
+</ul>
+<h3 id="SPACIAL-ANALYSIS"><a href="#SPACIAL-ANALYSIS" class="headerlink" title="SPACIAL ANALYSIS"></a>SPACIAL ANALYSIS</h3><p><strong>  In this module, users can make a comparison between different basins, counties or geomorphologic landscapes for the same variables (e.g. precipitation, GPP and ECC). This progress is easily achieved through checking the corresponding parameters that the users are interested in, and this function is good for researchers to fully understand the spatial heterogeneity and its reasons.</strong></p>
+<ul>
+<li><p><strong>Function</strong></p>
+<ul>
+<li><p>ECCAS uses a variety of classical statistical methods, such as correlation analysis and trend analysis, to analyze changes in ECC and its controlling factors. Spatial data are stored in a variety of forms, and they may not be integrated because of the influence of various factors, such as the coordinate system and the bearing medium. </p>
+</li>
+<li><p>ECCAS can provide users with capabilities of heterogeneous geophysical data analysis, including data accurate extraction from high-resolution remote sensing image, and tendencies detection in the framework of different multidisciplinary researches. </p>
+</li>
+<li><p>Using ECCAS even unskilled user without specific knowledge can perform compute ational processing and visualization of field observation as well as satellite monitoring datas ets through unified graphical web-interface.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Operation Steps</strong></p>
+<ul>
+<li><code>Mission Selection</code>: Determined to analyze the task of computing task results including the history and future, this analysis mainly involves the historical data.</li>
+<li><code>Region Selection</code>: Select the desired analysis for regional, ‘river_station’ for basion name, and the county name directly.</li>
+<li><code>Variable Selection</code>: The user can choose different time scale (<code>year</code>,<code>month</code>,<code>day</code>), choose different start time and end time, choose each parameter and click <code>Add</code>, or chosse all with take <code>Add All</code>. Then click the button <code>Analysis</code>.</li>
+<li>Use <code>region name</code> in different colors to decide it display or not.</li>
+<li>The top two charts for the task of ecosystem capacity and ecosystem capacity capacity evaluation, spatial mean value and sequence in different regions.</li>
+<li>Below charts are spatial mean value and time sequence in the selected parameters.</li>
+</ul>
+</li>
+</ul>
+<br>
+<br>
+
+<h2 id="RELEVANT-DATA-DESCRIPTION"><a href="#RELEVANT-DATA-DESCRIPTION" class="headerlink" title="RELEVANT DATA DESCRIPTION"></a>RELEVANT DATA DESCRIPTION</h2><ul>
+<li>Geomorphic regionalization data of the Loess Plateau<ul>
+<li><a target="_blank" rel="noopener" href="http://www.gov.cn/zwgk/2011-01/17/content_1786454.htm">Notice on the publication of the outline of the comprehensive management plan for the Loess Plateau Region (2010s-2030s)</a>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="RELATED-LINKS"><a href="#RELATED-LINKS" class="headerlink" title="RELATED LINKS"></a>RELATED LINKS</h2><ul>
+<li><p><a href="">papers</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://117.34.95.115/ccas">System html</a></p>
+</li>
+</ul>
+
+    </div>
+
+    <div>
+      
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+              -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+        </div>
+    
+</div>
+      
+    </div>
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" rel="tag"># 系统设计</a>
+              <a href="/tags/%E9%BB%84%E5%9C%9F%E9%AB%98%E5%8E%9F/" rel="tag"># 黄土高原</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/21/aaaa/" rel="next" title="aaaa">
+      aaaa <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="FengSui 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="FengSui 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>fengsui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://htwithwind.github.io/2021/01/21/lp-ccas/" title="黄土高原生态系统承载力系统设计">https://htwithwind.github.io/2021/01/21/lp-ccas/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FRAMEWORK"><span class="nav-number">1.1.</span> <span class="nav-text">FRAMEWORK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FUNCTION"><span class="nav-number">1.2.</span> <span class="nav-text">FUNCTION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HOMEPAGE"><span class="nav-number">1.2.1.</span> <span class="nav-text">HOMEPAGE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BASEDATA"><span class="nav-number">1.2.2.</span> <span class="nav-text">BASEDATA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROCESS-PARAMETER"><span class="nav-number">1.2.3.</span> <span class="nav-text">PROCESS PARAMETER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCENE-SIMULATION"><span class="nav-number">1.2.4.</span> <span class="nav-text">SCENE SIMULATION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPACIAL-ANALYSIS"><span class="nav-number">1.2.5.</span> <span class="nav-text">SPACIAL ANALYSIS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELEVANT-DATA-DESCRIPTION"><span class="nav-number">1.3.</span> <span class="nav-text">RELEVANT DATA DESCRIPTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELATED-LINKS"><span class="nav-number">1.4.</span> <span class="nav-text">RELATED LINKS</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FengSui"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">FengSui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FengSui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">12k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

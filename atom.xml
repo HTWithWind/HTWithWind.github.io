@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Heart Tears With Wind&#39;s Blog</title>
+  <title>心泪随风</title>
   
   <subtitle>应无所住, 而生其心</subtitle>
   <link href="https://htwithwind.github.io/atom.xml" rel="self"/>
   
   <link href="https://htwithwind.github.io/"/>
-  <updated>2021-01-21T09:12:49.000Z</updated>
+  <updated>2021-01-28T01:04:36.000Z</updated>
   <id>https://htwithwind.github.io/</id>
   
   <author>
@@ -17,20 +17,77 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>黄土高原生态系统承载力系统设计</title>
-    <link href="https://htwithwind.github.io/2021/01/21/huang-tu-gao-yuan-sheng-tai-xi-tong-cheng-zai-li-xi-tong-she-ji/"/>
-    <id>https://htwithwind.github.io/2021/01/21/huang-tu-gao-yuan-sheng-tai-xi-tong-cheng-zai-li-xi-tong-she-ji/</id>
+    <title>MAC系统Dock中应用程序图标丢失的解决办法</title>
+    <link href="https://htwithwind.github.io/2021/01/28/23756/"/>
+    <id>https://htwithwind.github.io/2021/01/28/23756/</id>
+    <published>2021-01-28T00:54:11.000Z</published>
+    <updated>2021-01-28T01:04:36.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;再次添加&quot;&gt;&lt;a href=&quot;#再次添加&quot; class=&quot;headerlink&quot; title=&quot;再次添加&quot;&gt;&lt;/a&gt;再次添加&lt;/h1&gt;&lt;p&gt;在 &lt;strong&gt;Finder&lt;/strong&gt; 窗口右上角的搜索框中输入 &lt;code&gt;launchpad&lt;/code&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="Mac" scheme="https://htwithwind.github.io/categories/Mac/"/>
+    
+    
+    <category term="Mac" scheme="https://htwithwind.github.io/tags/Mac/"/>
+    
+    <category term="launchpad" scheme="https://htwithwind.github.io/tags/launchpad/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>aaaa</title>
+    <link href="https://htwithwind.github.io/2021/01/21/aaaa/"/>
+    <id>https://htwithwind.github.io/2021/01/21/aaaa/</id>
     <published>2021-01-21T07:20:23.000Z</published>
-    <updated>2021-01-21T09:12:49.000Z</updated>
+    <updated>2021-01-27T15:28:12.000Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;系统设计&quot;&gt;&lt;a href=&quot;#系统设计&quot; class=&quot;headerlink&quot; title=&quot;系统设计&quot;&gt;&lt;/a&gt;系统设计&lt;/h1&gt;&lt;h2 id=&quot;FRAMEWORK&quot;&gt;&lt;a href=&quot;#FRAMEWORK&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;p&gt;aaaaaa&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Hexo 主题" scheme="https://htwithwind.github.io/categories/Hexo-%E4%B8%BB%E9%A2%98/"/>
+    
+    <category term="Blogs开发" scheme="https://htwithwind.github.io/categories/Hexo-%E4%B8%BB%E9%A2%98/Blogs%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="Blogs" scheme="https://htwithwind.github.io/tags/Blogs/"/>
+    
+    <category term="Next" scheme="https://htwithwind.github.io/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>黄土高原生态系统承载力系统设计</title>
+    <link href="https://htwithwind.github.io/2021/01/21/lp-ccas/"/>
+    <id>https://htwithwind.github.io/2021/01/21/lp-ccas/</id>
+    <published>2021-01-21T07:20:23.000Z</published>
+    <updated>2021-01-27T14:59:04.000Z</updated>
+    
+    
+    <summary type="html">&lt;div&gt;
+    &lt;table style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+        &lt;tbody&gt;&lt;tr&gt;
+            &lt;td style=&quot;&quot;&gt;
+                &lt;!--左侧内容--&gt;
+                &lt;img src=&quot;/images/abstract/0001.png&quot; width=&quot;450px&quot; height=&quot;150px&quot;&gt;
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;!--右侧内容--&gt;
+                The system has four modules with an region overview functiona-lity, which contains base datasets selection, process parameter configuration, spatialtemp-oral analysis and scenario simulation.
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;</summary>
     
     
     
