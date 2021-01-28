@@ -18,6 +18,23 @@
       </tags>
   </entry>
   <entry>
+    <title>递归遍历指定文件夹下某一类型的文件</title>
+    <url>/2021/01/28/23757/</url>
+    <content><![CDATA[<p>递归遍历某一路径下所有指定格式的文件,以列表形式返回文件完整路径.</p>
+<a id="more"></a>
+
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight apache"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8-*-</span></span><br><span class="line"><span class="attribute">python</span>==<span class="number">2</span>.<span class="number">7</span>.<span class="number">14</span></span><br><span class="line"><span class="attribute">packages</span>: os</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="递归遍历文件夹函数"><a href="#递归遍历文件夹函数" class="headerlink" title="递归遍历文件夹函数"></a>递归遍历文件夹函数</h1><figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dirlist</span>(<span class="params">path, filelist, dataformat</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    # 遍历给定文件夹下特定格式的文件，并保存文件名返回</span></span><br><span class="line"><span class="string">    :param path: 路径</span></span><br><span class="line"><span class="string">    :param filelist: 存放文件名的列表</span></span><br><span class="line"><span class="string">    :param dataformat: 数据格式（tif, hdf, asc, etc.）</span></span><br><span class="line"><span class="string">    :return: 此目录下指定格式的文件名列表</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    C_files = os.listdir(path)</span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> C_files:</span><br><span class="line">        newfile = os.path.join(path, file)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(newfile):</span><br><span class="line">            dirlist(newfile, filelist, dataformat)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> file.endswith(<span class="string">".%s"</span> % dataformat):</span><br><span class="line">                filelist.append(newfile)</span><br><span class="line">    <span class="keyword">return</span> filelist</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="定义主函数"><a href="#定义主函数" class="headerlink" title="定义主函数"></a>定义主函数</h1><figure class="highlight lua"><table><tbody><tr><td class="code"><pre><span class="line">def main(<span class="built_in">path</span>):</span><br><span class="line">    file_list = dirlist(<span class="built_in">path</span>, [], <span class="string">"tif"</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> file_list:</span><br><span class="line">        <span class="built_in">print</span>(i)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    # 待查询路径</span><br><span class="line">    <span class="built_in">path</span> = <span class="string">""</span></span><br><span class="line">    main(<span class="built_in">path</span>)</span><br></pre></td></tr></tbody></table></figure>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>黄土高原生态系统承载力系统设计</title>
     <url>/2021/01/21/lp-ccas/</url>
     <content><![CDATA[<div>
