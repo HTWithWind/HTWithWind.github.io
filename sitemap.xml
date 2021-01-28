@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://htwithwind.github.io/2021/01/28/23756/</loc>
+    
+    <lastmod>2021-01-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://htwithwind.github.io/tags/index.html</loc>
     
     <lastmod>2021-01-28</lastmod>
@@ -12,20 +19,6 @@
     <loc>https://htwithwind.github.io/categories/index.html</loc>
     
     <lastmod>2021-01-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://htwithwind.github.io/2021/01/28/23756/</loc>
-    
-    <lastmod>2021-01-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://htwithwind.github.io/2021/01/21/aaaa/</loc>
-    
-    <lastmod>2021-01-27</lastmod>
     
   </url>
   
@@ -88,20 +81,6 @@
   </url>
   
   <url>
-    <loc>https://htwithwind.github.io/tags/Blogs/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://htwithwind.github.io/tags/Next/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://htwithwind.github.io/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</loc>
     <lastmod>2021-01-28</lastmod>
     <changefreq>daily</changefreq>
@@ -125,21 +104,7 @@
   </url>
   
   <url>
-    <loc>https://htwithwind.github.io/categories/Hexo-%E4%B8%BB%E9%A2%98/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://htwithwind.github.io/categories/%E7%A7%91%E7%A0%94/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://htwithwind.github.io/categories/Hexo-%E4%B8%BB%E9%A2%98/Blogs%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2021-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

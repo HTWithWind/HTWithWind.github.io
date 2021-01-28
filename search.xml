@@ -3,7 +3,10 @@
   <entry>
     <title>MAC系统Dock中应用程序图标丢失的解决办法</title>
     <url>/2021/01/28/23756/</url>
-    <content><![CDATA[<h1 id="再次添加"><a href="#再次添加" class="headerlink" title="再次添加"></a>再次添加</h1><p>在 <strong>Finder</strong> 窗口右上角的搜索框中输入 <code>launchpad</code> 关键字，再把图标拖到<strong>Dock</strong>中；</p>
+    <content><![CDATA[<p>当你的 <strong>Mac</strong> <code>launchpad</code>图标丢失时…</p>
+<a id="more"></a>
+
+<h1 id="再次添加"><a href="#再次添加" class="headerlink" title="再次添加"></a>再次添加</h1><p>在 <strong>Finder</strong> 窗口右上角的搜索框中输入 <code>launchpad</code> 关键字，再把图标拖到<strong>Dock</strong>中；</p>
 <h1 id="采用快捷方式"><a href="#采用快捷方式" class="headerlink" title="采用快捷方式"></a>采用快捷方式</h1><p>在触摸板上合拢4指，即可显示应用程序列表（即快速启动板：<code>launchpad</code>）。</p>
 ]]></content>
       <categories>
@@ -12,49 +15,6 @@
       <tags>
         <tag>Mac</tag>
         <tag>launchpad</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>aaaa</title>
-    <url>/2021/01/21/aaaa/</url>
-    <content><![CDATA[<p>aaaaaa</p>
-<a id="more"></a>
-
-<h1 align="center"><a href="https://github.com/fancyapps/fancybox">fancyBox 3</a> for <a href="https://github.com/theme-next">NexT</a></h1>
-
-<h2 align="center">If you want fancybox v2, please go to <a href="https://github.com/theme-next/theme-next-fancybox">theme-next-fancybox</a></h2>
-
-<h1 align="center">Installation</h1>
-
-<h2 align="center">Step 0 → Delete fancybox 2 (if you want to upgrade from v2)</h2>
-
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">$ rm -rf themes/next/<span class="built_in">source</span>/lib/fancybox</span><br></pre></td></tr></tbody></table></figure>
-<h2>If you want to use the CDN instead of clone this repo, please jump to the Step 3.</h2>
-
-<h2 align="center">Step 1 → Go to NexT dir</h2>
-
-<p>Change dir to <strong>NexT</strong> directory. There must be <code>layout</code>, <code>source</code>, <code>languages</code> and other directories:</p>
-<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> themes/next</span><br><span class="line">$ ls</span><br><span class="line">bower.json  _config.yml  docs  gulpfile.coffee  languages  layout  LICENSE.md  package.json  README.md  scripts  <span class="built_in">source</span>  <span class="built_in">test</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 align="center">Step 2 → Get module</h2>
-
-<p>Install module to <code>source/lib</code> directory:</p>
-<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/theme-next/theme-next-fancybox3 <span class="built_in">source</span>/lib/fancybox</span><br></pre></td></tr></tbody></table></figure>
-<h2 align="center">Step 3 → Set it up</h2>
-
-<p>Enable module in <strong>NexT</strong> <code>_config.yml</code> file:</p>
-<figure class="highlight yml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attr">fancybox:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
-<p><strong>And, if you wants to use the CDN, then need to set:</strong></p>
-<figure class="highlight yml"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attr">vendors:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line">  <span class="attr">fancybox:</span> <span class="string">//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js</span></span><br><span class="line">  <span class="attr">fancybox_css:</span> <span class="string">//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css</span></span><br></pre></td></tr></tbody></table></figure>
-<h1 align="center">Update</h1>
-
-<figure class="highlight sh"><table><tbody><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> themes/next/<span class="built_in">source</span>/lib/fancybox</span><br><span class="line">$ git pull</span><br></pre></td></tr></tbody></table></figure>]]></content>
-      <categories>
-        <category>Hexo 主题</category>
-        <category>Blogs开发</category>
-      </categories>
-      <tags>
-        <tag>Blogs</tag>
-        <tag>Next</tag>
       </tags>
   </entry>
   <entry>
