@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"htwithwind.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="利用Python地学数据处理模块GDAL实现:（1）读取栅格数据;（2）对栅格数据进行处理;（3）保存生成新的栅格数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python地学数据处理">
+<meta property="og:url" content="https://htwithwind.github.io/2021/01/29/20210129a/index.html">
+<meta property="og:site_name" content="心泪随风">
+<meta property="og:description" content="利用Python地学数据处理模块GDAL实现:（1）读取栅格数据;（2）对栅格数据进行处理;（3）保存生成新的栅格数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-29T09:05:39.000Z">
+<meta property="article:modified_time" content="2021-01-29T09:14:53.000Z">
+<meta property="article:author" content="FengSui">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="GDAL">
+<meta property="article:tag" content="地学数据处理">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://htwithwind.github.io/2021/01/29/20210129a/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Python地学数据处理 | 心泪随风</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="心泪随风" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">心泪随风</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">应无所住, 而生其心</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">4</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://htwithwind.github.io/2021/01/29/20210129a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="FengSui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心泪随风">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python地学数据处理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-29 17:05:39 / 修改时间：17:14:53" itemprop="dateCreated datePublished" datetime="2021-01-29T17:05:39+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>利用<strong>Python</strong>地学数据处理模块<code>GDAL</code><br>实现:<br>（1）读取栅格数据;<br>（2）对栅格数据进行处理;<br>（3）保存生成新的栅格数据</p>
+<a id="more"></a>
+
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GDAL</span>==<span class="number">2</span>.<span class="number">2</span>.<span class="number">4</span></span><br><span class="line"><span class="attribute">numpy</span>==<span class="number">1</span>.<span class="number">16</span>.<span class="number">6</span></span><br><span class="line"><span class="attribute">Python</span>==<span class="number">2</span>.<span class="number">7</span>.<span class="number">14</span></span><br><span class="line"><span class="attribute">packages</span>: os, sys</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h1><figure class="highlight reasonml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def main(input_p, output_p):</span><br><span class="line">    # 读取</span><br><span class="line">    data, geoT, proj = read<span class="constructor">Raster_Geo_Prj(<span class="params">input_p</span>)</span></span><br><span class="line"></span><br><span class="line">    # 处理</span><br><span class="line">    data1 = deal<span class="constructor">_raster(<span class="params">data</span>)</span></span><br><span class="line"></span><br><span class="line">    # 写出</span><br><span class="line">    rows, cols = data1.shape</span><br><span class="line">    write<span class="constructor">Raster(<span class="params">data</span>, <span class="params">output_p</span>, <span class="params">cols</span>, <span class="params">rows</span>, 1, <span class="params">geoT</span>, <span class="params">proj</span>)</span></span><br><span class="line">    return</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__<span class="operator"> == </span>'__main__':</span><br><span class="line">    # 栅格数据路径</span><br><span class="line">    input_path = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    # 栅格输出路径, 以.tif或.img结尾</span><br><span class="line">    output_path = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    programe<span class="constructor">_info()</span></span><br><span class="line">    main(input_path, output_path)</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据读取"><a href="#栅格数据读取" class="headerlink" title="栅格数据读取"></a>栅格数据读取</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readRaster_Geo_Prj</span>(<span class="params">rasterPath, bandN=<span class="number">1</span></span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    读取栅格数据，返回栅格数组，栅格地理坐标系统和投影坐标系统</span></span><br><span class="line"><span class="string">    :param rasterPath: 栅格数据绝对路径, string.</span></span><br><span class="line"><span class="string">    :param bandN: 波段数, integer.</span></span><br><span class="line"><span class="string">    :return: 栅格数据数组, 地理坐标系统, 投影坐标系统</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    ds = gdal.Open(rasterPath)</span><br><span class="line">    data = ds.GetRasterBand(bandN).ReadAsArray()</span><br><span class="line">    geoT = ds.GetGeoTransform()</span><br><span class="line">    prj = ds.GetProjection()</span><br><span class="line">    <span class="keyword">del</span> ds</span><br><span class="line">    <span class="keyword">return</span> data, geoT, prj</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据处理"><a href="#栅格数据处理" class="headerlink" title="栅格数据处理"></a>栅格数据处理</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal_raster</span>(<span class="params">data</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对数组数据进行处理</span></span><br><span class="line"><span class="string">    :param data: 数组数据, np.array.</span></span><br><span class="line"><span class="string">    :return: data1: 处理后的栅格数据, np.array.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 栅格数据扩大两倍</span></span><br><span class="line">    data1 = data * <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设定背景值为空, 注此语句仅适合浮点型</span></span><br><span class="line">    data1[data1 == data1[<span class="number">0</span>, <span class="number">0</span>]] = np.nan</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间平均值</span></span><br><span class="line">    print(np.nanmean(data1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间最大值</span></span><br><span class="line">    print(np.nanmax(data1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间最小值</span></span><br><span class="line">    print(np.nanmin(data1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间累和值</span></span><br><span class="line">    print(np.nansum(data1))</span><br><span class="line">    <span class="keyword">return</span> data1</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据保存输出"><a href="#栅格数据保存输出" class="headerlink" title="栅格数据保存输出"></a>栅格数据保存输出</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeRaster</span>(<span class="params">data, outpath_file, cols, rows, bands_num, geoTtansform, projection</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    此函数模块实现栅格数据的写出工作</span></span><br><span class="line"><span class="string">    :param data: 栅格数组数据, np.array.</span></span><br><span class="line"><span class="string">    :param outpath_file: 绝对输出路径, 以.tif或.img结尾, string.</span></span><br><span class="line"><span class="string">    :param cols: 栅格数组的列数, integer.</span></span><br><span class="line"><span class="string">    :param rows: 栅格数组的行数, integer.</span></span><br><span class="line"><span class="string">    :param bands_num: 栅格数组的维数, 必须与data保持一致, integer.</span></span><br><span class="line"><span class="string">    :param geoTtansform: 地理坐标系统, touple.</span></span><br><span class="line"><span class="string">    :param projection: 投影坐标系统, string.</span></span><br><span class="line"><span class="string">    :return: None</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># get band data type</span></span><br><span class="line">    <span class="keyword">if</span> bands_num == <span class="number">1</span>:</span><br><span class="line">        data_tmp = data</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data_tmp = data[<span class="number">0</span>, :, :]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'int8'</span> <span class="keyword">in</span> data_tmp.dtype.name:</span><br><span class="line">        datatype = gdal.GDT_Byte</span><br><span class="line">    <span class="keyword">elif</span> <span class="string">'int16'</span> <span class="keyword">in</span> data_tmp.dtype.name:</span><br><span class="line">        datatype = gdal.GDT_UInt16</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        datatype = gdal.GDT_Float32</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get data driver type</span></span><br><span class="line">    basename = os.path.basename(outpath_file).split(<span class="string">"."</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> basename == <span class="string">"tif"</span>:</span><br><span class="line">        driver_name = <span class="string">"GTiff"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">raise</span> ValueError(</span><br><span class="line">            <span class="string">"The parameter outpath_file must be end of \".tif\" or \".img\"!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># save tiff to the outpath_file</span></span><br><span class="line">    outdrv = gdal.GetDriverByName(driver_name)</span><br><span class="line">    outdat = outdrv.Create(outpath_file, cols, rows, bands_num, datatype, [<span class="string">"COMPRESS=DEFLATE"</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> outdat <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    outdat.SetGeoTransform(geoTtansform)</span><br><span class="line">    outdat.SetProjection(projection)</span><br><span class="line">    <span class="keyword">if</span> bands_num &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(bands_num):</span><br><span class="line">            outdat.GetRasterBand(i + <span class="number">1</span>).WriteArray(data[i, :, :])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        outdat.GetRasterBand(<span class="number">1</span>).WriteArray(data)</span><br><span class="line">    outdat = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Data has already be write to %s"</span> % outpath_file)</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></tbody></table></figure>
+    </div>
+
+    <div>
+      
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+              -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+        </div>
+    
+</div>
+      
+    </div>
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/GDAL/" rel="tag"># GDAL</a>
+              <a href="/tags/%E5%9C%B0%E5%AD%A6%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" rel="tag"># 地学数据处理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/28/20210128a/" rel="prev" title="递归遍历指定文件夹下某一类型的文件">
+      <i class="fa fa-chevron-left"></i> 递归遍历指定文件夹下某一类型的文件
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="FengSui 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="FengSui 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>FengSui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://htwithwind.github.io/2021/01/29/20210129a/" title="Python地学数据处理">https://htwithwind.github.io/2021/01/29/20210129a/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%85%E6%A0%BC%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">栅格数据读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%85%E6%A0%BC%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">栅格数据处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%85%E6%A0%BC%E6%95%B0%E6%8D%AE%E4%BF%9D%E5%AD%98%E8%BE%93%E5%87%BA"><span class="nav-number">5.</span> <span class="nav-text">栅格数据保存输出</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FengSui"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">FengSui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/yourname" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/yourname" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/yourname" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/yourname" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/yourname" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="skype:yourname?call|chat" title="Skype → skype:yourname?call|chat" rel="noopener" target="_blank"><i class="fab fa-skype fa-fw"></i>Skype</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FengSui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">14k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

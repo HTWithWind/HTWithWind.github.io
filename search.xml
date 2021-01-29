@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Python地学数据处理</title>
+    <url>/2021/01/29/20210129a/</url>
+    <content><![CDATA[<p>利用<strong>Python</strong>地学数据处理模块<code>GDAL</code><br>实现:<br>（1）读取栅格数据;<br>（2）对栅格数据进行处理;<br>（3）保存生成新的栅格数据</p>
+<a id="more"></a>
+
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight apache"><table><tbody><tr><td class="code"><pre><span class="line"><span class="attribute">GDAL</span>==<span class="number">2</span>.<span class="number">2</span>.<span class="number">4</span></span><br><span class="line"><span class="attribute">numpy</span>==<span class="number">1</span>.<span class="number">16</span>.<span class="number">6</span></span><br><span class="line"><span class="attribute">Python</span>==<span class="number">2</span>.<span class="number">7</span>.<span class="number">14</span></span><br><span class="line"><span class="attribute">packages</span>: os, sys</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h1><figure class="highlight reasonml"><table><tbody><tr><td class="code"><pre><span class="line">def main(input_p, output_p):</span><br><span class="line">    # 读取</span><br><span class="line">    data, geoT, proj = read<span class="constructor">Raster_Geo_Prj(<span class="params">input_p</span>)</span></span><br><span class="line"></span><br><span class="line">    # 处理</span><br><span class="line">    data1 = deal<span class="constructor">_raster(<span class="params">data</span>)</span></span><br><span class="line"></span><br><span class="line">    # 写出</span><br><span class="line">    rows, cols = data1.shape</span><br><span class="line">    write<span class="constructor">Raster(<span class="params">data</span>, <span class="params">output_p</span>, <span class="params">cols</span>, <span class="params">rows</span>, 1, <span class="params">geoT</span>, <span class="params">proj</span>)</span></span><br><span class="line">    return</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__<span class="operator"> == </span>'__main__':</span><br><span class="line">    # 栅格数据路径</span><br><span class="line">    input_path = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    # 栅格输出路径, 以.tif或.img结尾</span><br><span class="line">    output_path = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    programe<span class="constructor">_info()</span></span><br><span class="line">    main(input_path, output_path)</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据读取"><a href="#栅格数据读取" class="headerlink" title="栅格数据读取"></a>栅格数据读取</h1><figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readRaster_Geo_Prj</span>(<span class="params">rasterPath, bandN=<span class="number">1</span></span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    读取栅格数据，返回栅格数组，栅格地理坐标系统和投影坐标系统</span></span><br><span class="line"><span class="string">    :param rasterPath: 栅格数据绝对路径, string.</span></span><br><span class="line"><span class="string">    :param bandN: 波段数, integer.</span></span><br><span class="line"><span class="string">    :return: 栅格数据数组, 地理坐标系统, 投影坐标系统</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    ds = gdal.Open(rasterPath)</span><br><span class="line">    data = ds.GetRasterBand(bandN).ReadAsArray()</span><br><span class="line">    geoT = ds.GetGeoTransform()</span><br><span class="line">    prj = ds.GetProjection()</span><br><span class="line">    <span class="keyword">del</span> ds</span><br><span class="line">    <span class="keyword">return</span> data, geoT, prj</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据处理"><a href="#栅格数据处理" class="headerlink" title="栅格数据处理"></a>栅格数据处理</h1><figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal_raster</span>(<span class="params">data</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对数组数据进行处理</span></span><br><span class="line"><span class="string">    :param data: 数组数据, np.array.</span></span><br><span class="line"><span class="string">    :return: data1: 处理后的栅格数据, np.array.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 栅格数据扩大两倍</span></span><br><span class="line">    data1 = data * <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设定背景值为空, 注此语句仅适合浮点型</span></span><br><span class="line">    data1[data1 == data1[<span class="number">0</span>, <span class="number">0</span>]] = np.nan</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间平均值</span></span><br><span class="line">    print(np.nanmean(data1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间最大值</span></span><br><span class="line">    print(np.nanmax(data1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间最小值</span></span><br><span class="line">    print(np.nanmin(data1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印数据空间累和值</span></span><br><span class="line">    print(np.nansum(data1))</span><br><span class="line">    <span class="keyword">return</span> data1</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据保存输出"><a href="#栅格数据保存输出" class="headerlink" title="栅格数据保存输出"></a>栅格数据保存输出</h1><figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeRaster</span>(<span class="params">data, outpath_file, cols, rows, bands_num, geoTtansform, projection</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    此函数模块实现栅格数据的写出工作</span></span><br><span class="line"><span class="string">    :param data: 栅格数组数据, np.array.</span></span><br><span class="line"><span class="string">    :param outpath_file: 绝对输出路径, 以.tif或.img结尾, string.</span></span><br><span class="line"><span class="string">    :param cols: 栅格数组的列数, integer.</span></span><br><span class="line"><span class="string">    :param rows: 栅格数组的行数, integer.</span></span><br><span class="line"><span class="string">    :param bands_num: 栅格数组的维数, 必须与data保持一致, integer.</span></span><br><span class="line"><span class="string">    :param geoTtansform: 地理坐标系统, touple.</span></span><br><span class="line"><span class="string">    :param projection: 投影坐标系统, string.</span></span><br><span class="line"><span class="string">    :return: None</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># get band data type</span></span><br><span class="line">    <span class="keyword">if</span> bands_num == <span class="number">1</span>:</span><br><span class="line">        data_tmp = data</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data_tmp = data[<span class="number">0</span>, :, :]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'int8'</span> <span class="keyword">in</span> data_tmp.dtype.name:</span><br><span class="line">        datatype = gdal.GDT_Byte</span><br><span class="line">    <span class="keyword">elif</span> <span class="string">'int16'</span> <span class="keyword">in</span> data_tmp.dtype.name:</span><br><span class="line">        datatype = gdal.GDT_UInt16</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        datatype = gdal.GDT_Float32</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get data driver type</span></span><br><span class="line">    basename = os.path.basename(outpath_file).split(<span class="string">"."</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> basename == <span class="string">"tif"</span>:</span><br><span class="line">        driver_name = <span class="string">"GTiff"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">raise</span> ValueError(</span><br><span class="line">            <span class="string">"The parameter outpath_file must be end of \".tif\" or \".img\"!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># save tiff to the outpath_file</span></span><br><span class="line">    outdrv = gdal.GetDriverByName(driver_name)</span><br><span class="line">    outdat = outdrv.Create(outpath_file, cols, rows, bands_num, datatype, [<span class="string">"COMPRESS=DEFLATE"</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> outdat <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    outdat.SetGeoTransform(geoTtansform)</span><br><span class="line">    outdat.SetProjection(projection)</span><br><span class="line">    <span class="keyword">if</span> bands_num &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(bands_num):</span><br><span class="line">            outdat.GetRasterBand(i + <span class="number">1</span>).WriteArray(data[i, :, :])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        outdat.GetRasterBand(<span class="number">1</span>).WriteArray(data)</span><br><span class="line">    outdat = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Data has already be write to %s"</span> % outpath_file)</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></tbody></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>GDAL</tag>
+        <tag>地学数据处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MAC系统Dock中应用程序图标丢失的解决办法</title>
-    <url>/2021/01/28/23756/</url>
+    <url>/2021/01/28/20210127a/</url>
     <content><![CDATA[<p>当你的 <strong>Mac</strong> <code>launchpad</code>图标丢失时…</p>
 <a id="more"></a>
 
-<h1 id="再次添加"><a href="#再次添加" class="headerlink" title="再次添加"></a>再次添加</h1><p>在 <strong>Finder</strong> 窗口右上角的搜索框中输入 <code>launchpad</code> 关键字，再把图标拖到<strong>Dock</strong>中；</p>
+<h1 id="再次添加"><a href="#再次添加" class="headerlink" title="再次添加"></a>再次添加</h1><p>在 <strong>Finder</strong> 窗口右上角的搜索框中输入 <code>launchpad</code> 关键字，再把图标拖到<strong>Dock</strong>中。</p>
 <h1 id="采用快捷方式"><a href="#采用快捷方式" class="headerlink" title="采用快捷方式"></a>采用快捷方式</h1><p>在触摸板上合拢4指，即可显示应用程序列表（即快速启动板：<code>launchpad</code>）。</p>
 ]]></content>
       <categories>
+        <category>系统</category>
         <category>Mac</category>
       </categories>
       <tags>
@@ -19,8 +40,8 @@
   </entry>
   <entry>
     <title>递归遍历指定文件夹下某一类型的文件</title>
-    <url>/2021/01/28/23757/</url>
-    <content><![CDATA[<p>递归遍历某一路径下所有指定格式的文件,以列表形式返回文件完整路径.</p>
+    <url>/2021/01/28/20210128a/</url>
+    <content><![CDATA[<p>递归遍历某一路径下所有指定格式的文件, 以列表形式返回文件完整路径。</p>
 <a id="more"></a>
 
 <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight apache"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8-*-</span></span><br><span class="line"><span class="attribute">python</span>==<span class="number">2</span>.<span class="number">7</span>.<span class="number">14</span></span><br><span class="line"><span class="attribute">packages</span>: os</span><br></pre></td></tr></tbody></table></figure>
@@ -32,11 +53,13 @@
       </categories>
       <tags>
         <tag>Python</tag>
+        <tag>程序开发</tag>
+        <tag>基础学习</tag>
       </tags>
   </entry>
   <entry>
     <title>黄土高原生态系统承载力系统设计</title>
-    <url>/2021/01/21/lp-ccas/</url>
+    <url>/2021/01/21/20210121a/</url>
     <content><![CDATA[<div>
     <table style="margin-left: auto; margin-right: auto;">
         <tbody><tr>
@@ -55,12 +78,12 @@
 
 <h1 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h1><h2 id="FRAMEWORK"><a href="#FRAMEWORK" class="headerlink" title="FRAMEWORK"></a>FRAMEWORK</h2><p>  <strong>ECCAS</strong>( <strong>E</strong>cosystem <strong>C</strong>arrying <strong>C</strong>apicity <strong>A</strong>ssessment <strong>S</strong>ystem) has a full graphical user interface (GUI) functionality and runs on Microsoft Windows operating systems. The system has four modules with an region overview functiona-lity, which contains base datasets selection, process parameter configuration, spatialtemp-oral analysis and scenario simulation. Precipitation and social-economic water are two vital factors that affect the ecosystem carrying capacity. Region overview shows us the ev-aluation results of history and future ecosystem carrying capacity directly, and according to different geomorphological types, we can find out whether different regions are overloa-ded or not.</p>
 <div align="center">
-    <img src="/2021/01/21/lp-ccas/figure1.jpg" width="600" alt="figure1">
+    <img src="/2021/01/21/20210121a/figure1.jpg" width="600" alt="figure1">
 </div>
 
 <p>  ECCAS is coded in Python, Matlab, Scala and JavaScript based on the Linux operating system. All models and data are encapsulated in the bottom framework. For interacting with geospatial files, ECCAS uses the Geospatial Data Abstraction Library (GDAL, 2015) for raster and vector handling. The related models are accessed by ECCAS via the python API. Base data selection can be accessed from a series of drop down menus, from live ‘radio-buttons’, or from toolbars embedded in the user interface, which means that users can circumvent use of the drop down menu system. Selecting the suite of radio buttons and toolbars is performed by clicking the respective active area of the screen with the mouse. In summary, ECCAS is designed to achieve communication, persistence and accessibility merits in terms of platform independence, as well as model sharing, high performance computing and dynamic visualization capabilities.</p>
 <div align="center">
-    <img src="/2021/01/21/lp-ccas/figure2.jpg" width="600" alt="figure2">
+    <img src="/2021/01/21/20210121a/figure2.jpg" width="600" alt="figure2">
 </div>
 
 <h2 id="FUNCTION"><a href="#FUNCTION" class="headerlink" title="FUNCTION"></a>FUNCTION</h2><h3 id="HOMEPAGE"><a href="#HOMEPAGE" class="headerlink" title="HOMEPAGE"></a>HOMEPAGE</h3><p><strong>  This module is the integration of social and economic water consumption, precipitation, NDVI, GPP, the carrying capacity of ecological system related information or preliminary results.</strong></p>
@@ -265,11 +288,11 @@
 ]]></content>
       <categories>
         <category>科研</category>
-        <category>软件开发</category>
       </categories>
       <tags>
         <tag>系统设计</tag>
         <tag>黄土高原</tag>
+        <tag>软件开发</tag>
       </tags>
   </entry>
 </search>
