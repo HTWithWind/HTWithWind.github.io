@@ -6,7 +6,7 @@
   <link href="https://htwithwind.github.io/atom.xml" rel="self"/>
   
   <link href="https://htwithwind.github.io/"/>
-  <updated>2021-01-29T09:14:53.000Z</updated>
+  <updated>2021-02-01T04:04:29.000Z</updated>
   <id>https://htwithwind.github.io/</id>
   
   <author>
@@ -21,10 +21,10 @@
     <link href="https://htwithwind.github.io/2021/01/29/20210129a/"/>
     <id>https://htwithwind.github.io/2021/01/29/20210129a/</id>
     <published>2021-01-29T09:05:39.000Z</published>
-    <updated>2021-01-29T09:14:53.000Z</updated>
+    <updated>2021-02-01T04:04:29.000Z</updated>
     
     
-    <summary type="html">&lt;p&gt;利用&lt;strong&gt;Python&lt;/strong&gt;地学数据处理模块&lt;code&gt;GDAL&lt;/code&gt;&lt;br&gt;实现:&lt;br&gt;（1）读取栅格数据;&lt;br&gt;（2）对栅格数据进行处理;&lt;br&gt;（3）保存生成新的栅格数据&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;利用 &lt;strong&gt;Python&lt;/strong&gt; 地学数据处理模块 &lt;code&gt;GDAL&lt;/code&gt;&lt;br&gt;实现:（1）读取栅格数据;（2）对栅格数据进行处理;（3）保存生成新的栅格数据。&lt;/p&gt;</summary>
     
     
     
@@ -44,7 +44,7 @@
     <link href="https://htwithwind.github.io/2021/01/28/20210128a/"/>
     <id>https://htwithwind.github.io/2021/01/28/20210128a/</id>
     <published>2021-01-28T11:32:45.000Z</published>
-    <updated>2021-01-28T14:26:45.000Z</updated>
+    <updated>2021-02-01T04:04:17.000Z</updated>
     
     
     <summary type="html">&lt;p&gt;递归遍历某一路径下所有指定格式的文件, 以列表形式返回文件完整路径。&lt;/p&gt;</summary>
