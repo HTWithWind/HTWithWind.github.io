@@ -6,7 +6,7 @@
   <link href="https://htwithwind.github.io/atom.xml" rel="self"/>
   
   <link href="https://htwithwind.github.io/"/>
-  <updated>2021-02-01T09:59:13.000Z</updated>
+  <updated>2021-02-01T11:08:37.000Z</updated>
   <id>https://htwithwind.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://htwithwind.github.io/2021/02/01/20210201a/"/>
     <id>https://htwithwind.github.io/2021/02/01/20210201a/</id>
     <published>2021-02-01T09:52:12.000Z</published>
-    <updated>2021-02-01T09:59:13.000Z</updated>
+    <updated>2021-02-01T11:08:37.000Z</updated>
     
     
     <summary type="html">&lt;p&gt;当你希望用高分辨率的&lt;code&gt;离散数据&lt;/code&gt;提取低分辨率的&lt;code&gt;连续数据&lt;/code&gt;，而你的设备无法将低分辨重采样至高分辨率或执行效率难以接受时，可以采用此方法。&lt;br&gt;1、示例中高分辨率数据（a）为类别变量，如植被类型、土壤类型等；&lt;br&gt;2、低分辨率数据（b）为连续变量，如降水、气温等；&lt;br&gt;3、我们循环遍历a数据的所有类别，每个类别涉及很多高分辨率的栅格，我们获取到所有索引并将之一一对应到b数据的索引上，即可免除重采样的繁琐步骤。&lt;/p&gt;</summary>
