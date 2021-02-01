@@ -6,7 +6,7 @@
   <link href="https://htwithwind.github.io/atom.xml" rel="self"/>
   
   <link href="https://htwithwind.github.io/"/>
-  <updated>2021-02-01T04:04:29.000Z</updated>
+  <updated>2021-02-01T09:59:13.000Z</updated>
   <id>https://htwithwind.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>高分辨率栅格提取低分辨率栅格的Python实现</title>
+    <link href="https://htwithwind.github.io/2021/02/01/20210201a/"/>
+    <id>https://htwithwind.github.io/2021/02/01/20210201a/</id>
+    <published>2021-02-01T09:52:12.000Z</published>
+    <updated>2021-02-01T09:59:13.000Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;当你希望用高分辨率的&lt;code&gt;离散数据&lt;/code&gt;提取低分辨率的&lt;code&gt;连续数据&lt;/code&gt;，而你的设备无法将低分辨重采样至高分辨率或执行效率难以接受时，可以采用此方法。&lt;br&gt;1、示例中高分辨率数据（a）为类别变量，如植被类型、土壤类型等；&lt;br&gt;2、低分辨率数据（b）为连续变量，如降水、气温等；&lt;br&gt;3、我们循环遍历a数据的所有类别，每个类别涉及很多高分辨率的栅格，我们获取到所有索引并将之一一对应到b数据的索引上，即可免除重采样的繁琐步骤。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://htwithwind.github.io/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="https://htwithwind.github.io/tags/Python/"/>
+    
+    <category term="GDAL" scheme="https://htwithwind.github.io/tags/GDAL/"/>
+    
+    <category term="栅格数据" scheme="https://htwithwind.github.io/tags/%E6%A0%85%E6%A0%BC%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python地学数据处理</title>
     <link href="https://htwithwind.github.io/2021/01/29/20210129a/"/>
     <id>https://htwithwind.github.io/2021/01/29/20210129a/</id>
     <published>2021-01-29T09:05:39.000Z</published>
-    <updated>2021-02-01T04:04:29.000Z</updated>
+    <updated>2021-02-01T04:07:01.000Z</updated>
     
     
     <summary type="html">&lt;p&gt;利用 &lt;strong&gt;Python&lt;/strong&gt; 地学数据处理模块 &lt;code&gt;GDAL&lt;/code&gt;&lt;br&gt;实现:（1）读取栅格数据;（2）对栅格数据进行处理;（3）保存生成新的栅格数据。&lt;/p&gt;</summary>

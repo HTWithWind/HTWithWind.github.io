@@ -22,22 +22,22 @@
     var CONFIG = {"hostname":"htwithwind.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="递归遍历某一路径下所有指定格式的文件, 以列表形式返回文件完整路径。">
+  <meta name="description" content="当你希望用高分辨率的离散数据提取低分辨率的连续数据，而你的设备无法将低分辨重采样至高分辨率或执行效率难以接受时，可以采用此方法。1、示例中高分辨率数据（a）为类别变量，如植被类型、土壤类型等；2、低分辨率数据（b）为连续变量，如降水、气温等；3、我们循环遍历a数据的所有类别，每个类别涉及很多高分辨率的栅格，我们获取到所有索引并将之一一对应到b数据的索引上，即可免除重采样的繁琐步骤。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="递归遍历指定文件夹下某一类型的文件">
-<meta property="og:url" content="https://htwithwind.github.io/2021/01/28/20210128a/index.html">
+<meta property="og:title" content="高分辨率栅格提取低分辨率栅格的Python实现">
+<meta property="og:url" content="https://htwithwind.github.io/2021/02/01/20210201a/index.html">
 <meta property="og:site_name" content="心泪随风">
-<meta property="og:description" content="递归遍历某一路径下所有指定格式的文件, 以列表形式返回文件完整路径。">
+<meta property="og:description" content="当你希望用高分辨率的离散数据提取低分辨率的连续数据，而你的设备无法将低分辨重采样至高分辨率或执行效率难以接受时，可以采用此方法。1、示例中高分辨率数据（a）为类别变量，如植被类型、土壤类型等；2、低分辨率数据（b）为连续变量，如降水、气温等；3、我们循环遍历a数据的所有类别，每个类别涉及很多高分辨率的栅格，我们获取到所有索引并将之一一对应到b数据的索引上，即可免除重采样的繁琐步骤。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-28T11:32:45.000Z">
-<meta property="article:modified_time" content="2021-02-01T04:04:17.000Z">
+<meta property="article:published_time" content="2021-02-01T09:52:12.000Z">
+<meta property="article:modified_time" content="2021-02-01T09:59:13.000Z">
 <meta property="article:author" content="FengSui">
 <meta property="article:tag" content="Python">
-<meta property="article:tag" content="程序开发">
-<meta property="article:tag" content="基础学习">
+<meta property="article:tag" content="GDAL">
+<meta property="article:tag" content="栅格数据">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://htwithwind.github.io/2021/01/28/20210128a/">
+<link rel="canonical" href="https://htwithwind.github.io/2021/02/01/20210201a/">
 
 
 <script id="page-configurations">
@@ -50,7 +50,7 @@
   };
 </script>
 
-  <title>递归遍历指定文件夹下某一类型的文件 | 心泪随风</title>
+  <title>高分辨率栅格提取低分辨率栅格的Python实现 | 心泪随风</title>
   
 
 
@@ -202,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://htwithwind.github.io/2021/01/28/20210128a/">
+    <link itemprop="mainEntityOfPage" href="https://htwithwind.github.io/2021/02/01/20210201a/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -215,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          递归遍历指定文件夹下某一类型的文件
+          高分辨率栅格提取低分辨率栅格的Python实现
         </h1>
 
         <div class="post-meta">
@@ -224,16 +224,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-01-28 19:32:45" itemprop="dateCreated datePublished" datetime="2021-01-28T19:32:45+08:00">2021-01-28</time>
+              <time title="创建时间：2021-02-01 17:52:12 / 修改时间：17:59:13" itemprop="dateCreated datePublished" datetime="2021-02-01T17:52:12+08:00">2021-02-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-01 12:04:17" itemprop="dateModified" datetime="2021-02-01T12:04:17+08:00">2021-02-01</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -260,8 +254,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/28/20210128a/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/28/20210128a/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/02/01/20210201a/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/01/20210201a/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -271,14 +265,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>707</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -290,13 +284,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>递归遍历某一路径下所有指定格式的文件, 以列表形式返回文件完整路径。</p>
+        <p>当你希望用高分辨率的<code>离散数据</code>提取低分辨率的<code>连续数据</code>，而你的设备无法将低分辨重采样至高分辨率或执行效率难以接受时，可以采用此方法。<br>1、示例中高分辨率数据（a）为类别变量，如植被类型、土壤类型等；<br>2、低分辨率数据（b）为连续变量，如降水、气温等；<br>3、我们循环遍历a数据的所有类别，每个类别涉及很多高分辨率的栅格，我们获取到所有索引并将之一一对应到b数据的索引上，即可免除重采样的繁琐步骤。</p>
 <a id="more"></a>
-
-<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8-*-</span></span><br><span class="line"><span class="attribute">python</span>==<span class="number">2</span>.<span class="number">7</span>.<span class="number">14</span></span><br><span class="line"><span class="attribute">internal</span> packages: os</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="递归遍历文件夹函数"><a href="#递归遍历文件夹函数" class="headerlink" title="递归遍历文件夹函数"></a>递归遍历文件夹函数</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dirlist</span>(<span class="params">path, filelist, dataformat</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    # 遍历给定文件夹下特定格式的文件，并保存文件名返回</span></span><br><span class="line"><span class="string">    :param path: 路径</span></span><br><span class="line"><span class="string">    :param filelist: 存放文件名的列表</span></span><br><span class="line"><span class="string">    :param dataformat: 数据格式（tif, hdf, asc, etc.）</span></span><br><span class="line"><span class="string">    :return: 此目录下指定格式的文件名列表</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    C_files = os.listdir(path)</span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> C_files:</span><br><span class="line">        newfile = os.path.join(path, file)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(newfile):</span><br><span class="line">            dirlist(newfile, filelist, dataformat)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> file.endswith(<span class="string">".%s"</span> % dataformat):</span><br><span class="line">                filelist.append(newfile)</span><br><span class="line">    <span class="keyword">return</span> filelist</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="定义主函数"><a href="#定义主函数" class="headerlink" title="定义主函数"></a>定义主函数</h1><figure class="highlight lua"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def main(<span class="built_in">path</span>):</span><br><span class="line">    file_list = dirlist(<span class="built_in">path</span>, [], <span class="string">"tif"</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> file_list:</span><br><span class="line">        <span class="built_in">print</span>(i)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    # 待查询路径</span><br><span class="line">    <span class="built_in">path</span> = <span class="string">""</span></span><br><span class="line">    main(<span class="built_in">path</span>)</span><br></pre></td></tr></tbody></table></figure>
-
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GDAL</span>==<span class="number">2</span>.<span class="number">2</span>.<span class="number">4</span></span><br><span class="line"><span class="attribute">numpy</span>==<span class="number">1</span>.<span class="number">16</span>.<span class="number">6</span></span><br><span class="line"><span class="attribute">Python</span>==<span class="number">2</span>.<span class="number">7</span>.<span class="number">14</span></span><br><span class="line"><span class="attribute">internal</span> packages: os, math</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h1><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(h_p, l_p, out_p)</span></span><span class="symbol">:</span></span><br><span class="line">    <span class="comment"># 获取HRU索引文件</span></span><br><span class="line">    get_climate_index(h_p, l_p, out_p)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span><span class="symbol">:</span></span><br><span class="line">    <span class="comment"># 高分辨率栅格数据存放路径, 以tif结尾</span></span><br><span class="line">    high_resolution_raster_path = <span class="string">""</span></span><br><span class="line">    <span class="comment"># 低分辨率栅格数据存放路径, 以tif结尾</span></span><br><span class="line">    low_resolution_raster_path = <span class="string">""</span></span><br><span class="line">    <span class="comment"># 索引文件输出存放存放路径, 以txt结尾</span></span><br><span class="line">    outpath = <span class="string">""</span></span><br><span class="line">    main(high_resolution_raster_path, low_resolution_raster_path, outpath)</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="栅格数据读取"><a href="#栅格数据读取" class="headerlink" title="栅格数据读取"></a>栅格数据读取</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readRaster_Geo</span>(<span class="params">rasterPath, bandN</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    该函数读取栅格数据, 并返回栅格数据的地理坐标系统</span></span><br><span class="line"><span class="string">    :param rasterPath: 栅格数据的绝对路径, string</span></span><br><span class="line"><span class="string">    :param bandN: 要读取的波段, integer</span></span><br><span class="line"><span class="string">    :return: 栅格数据, np.array, 地理坐标系统, touple</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    ds = gdal.Open(rasterPath)</span><br><span class="line">    data = ds.GetRasterBand(bandN).ReadAsArray()</span><br><span class="line">    <span class="comment"># 获取地理坐标系统</span></span><br><span class="line">    geoT = ds.GetGeoTransform()</span><br><span class="line">    <span class="keyword">del</span> ds</span><br><span class="line">    <span class="keyword">return</span> data, geoT</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_climate_index</span>(<span class="params">high_p, low_p, outpath</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :param high_p: 高分辨率栅格数据文件路径, 以tif结尾, string</span></span><br><span class="line"><span class="string">    :param low_p: 低分辨率栅格数据文件路径, 以tif结尾, string</span></span><br><span class="line"><span class="string">    :param outpath: 输出路径, 以txt结尾, string</span></span><br><span class="line"><span class="string">    :return: None</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 查看该文件是否已存在</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(outpath):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取两个数据的地理和投影坐标系统</span></span><br><span class="line">        h_data, h_geo = readRaster_Geo(high_p, <span class="number">1</span>)</span><br><span class="line">        l_data, l_geo = readRaster_Geo(low_p, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取类别个数</span></span><br><span class="line">        hru_id_list = np.unique(h_data)</span><br><span class="line"></span><br><span class="line">        index_list = []</span><br><span class="line">        <span class="keyword">for</span> i_h <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, hru_id_list + <span class="number">1</span>):</span><br><span class="line">            index_list_col = []</span><br><span class="line">            index_list_row = []</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 获取到高分辨率栅格索引</span></span><br><span class="line">            ih_list = <span class="built_in">list</span>(np.where(h_data == i_h))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 逐个进行坐标对应转换</span></span><br><span class="line">            <span class="keyword">for</span> i_h_index <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(ih_list[<span class="number">0</span>])):</span><br><span class="line">                h_long = h_geo[<span class="number">0</span>] + ih_list[<span class="number">1</span>][i_h_index] * h_geo[<span class="number">1</span>] + <span class="number">0.50</span> * h_geo[<span class="number">1</span>]</span><br><span class="line">                h_lat = h_geo[<span class="number">3</span>] + ih_list[<span class="number">0</span>][i_h_index] * h_geo[<span class="number">5</span>] + <span class="number">0.50</span> * h_geo[<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line">                l_row = <span class="built_in">int</span>(math.ceil((h_lat - l_geo[<span class="number">3</span>]) / l_geo[<span class="number">5</span>]))</span><br><span class="line">                l_col = <span class="built_in">int</span>(math.ceil((h_long - l_geo[<span class="number">0</span>]) / l_geo[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">                index_list_row.append(l_row)</span><br><span class="line">                index_list_col.append(l_col)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 打印出进度</span></span><br><span class="line">            print(i_h)</span><br><span class="line">            <span class="comment"># 行列保存在同一行中, 采用"-"分割, 行尾增加换行符</span></span><br><span class="line">            index_list.append(<span class="built_in">str</span>(index_list_row) + <span class="string">"-"</span> + <span class="built_in">str</span>(index_list_col) + <span class="string">"\r\n"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 写出</span></span><br><span class="line">        write2txt(outpath, index_list)</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></tbody></table></figure>
+<h1 id="文本保存"><a href="#文本保存" class="headerlink" title="文本保存"></a>文本保存</h1><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write2txt</span>(<span class="params">fileName, data</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    保存列表数据至文本文件</span></span><br><span class="line"><span class="string">    :param fileName: 绝对路径名称, string</span></span><br><span class="line"><span class="string">    :param data: 数据列表, list</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    s = <span class="string">''</span>.join(data)</span><br><span class="line">    <span class="comment"># 因列表存在"["和"]", 故此处增加一步替换的过程</span></span><br><span class="line">    s = s.replace(<span class="string">"["</span>, <span class="string">""</span>).replace(<span class="string">']'</span>, <span class="string">''</span>)</span><br><span class="line">    s = s.replace(<span class="string">" "</span>, <span class="string">""</span>)</span><br><span class="line">    fp = file(fileName, <span class="string">'w'</span>)</span><br><span class="line">    fp.write(s)</span><br><span class="line">    fp.close()</span><br><span class="line">    print(<span class="string">"The file was written out successfully!"</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></tbody></table></figure>
     </div>
 
     <div>
@@ -317,8 +311,8 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Python/" rel="tag"># Python</a>
-              <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/" rel="tag"># 程序开发</a>
-              <a href="/tags/%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="tag"># 基础学习</a>
+              <a href="/tags/GDAL/" rel="tag"># GDAL</a>
+              <a href="/tags/%E6%A0%85%E6%A0%BC%E6%95%B0%E6%8D%AE/" rel="tag"># 栅格数据</a>
           </div>
 
         
@@ -327,13 +321,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/28/20210127a/" rel="prev" title="MAC系统Dock中应用程序图标丢失的解决办法">
-      <i class="fa fa-chevron-left"></i> MAC系统Dock中应用程序图标丢失的解决办法
+    <a href="/2021/01/29/20210129a/" rel="prev" title="Python地学数据处理">
+      <i class="fa fa-chevron-left"></i> Python地学数据处理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/01/29/20210129a/" rel="next" title="Python地学数据处理">
-      Python地学数据处理 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
         <div class="reward-container">
@@ -365,7 +356,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://htwithwind.github.io/2021/01/28/20210128a/" title="递归遍历指定文件夹下某一类型的文件">https://htwithwind.github.io/2021/01/28/20210128a/</a>
+    <a href="https://htwithwind.github.io/2021/02/01/20210201a/" title="高分辨率栅格提取低分辨率栅格的Python实现">https://htwithwind.github.io/2021/02/01/20210201a/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -431,7 +422,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E6%96%87%E4%BB%B6%E5%A4%B9%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">递归遍历文件夹函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">定义主函数</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%85%E6%A0%BC%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">栅格数据读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96"><span class="nav-number">4.</span> <span class="nav-text">提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E4%BF%9D%E5%AD%98"><span class="nav-number">5.</span> <span class="nav-text">文本保存</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
